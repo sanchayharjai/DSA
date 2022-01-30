@@ -48,12 +48,14 @@ public class Bridges {
         for(int i = 0; i < graph.length; i++) if(!visited[i]) dfs(i,-1,graph,ids,lo,visited,bridges);
         return bridges;
     }
-    public void dfs(int at, int parent, List<Edge> graph[], int[] ids, int lo[], boolean[] visited, List<Integer> bridges){
+    private void dfs(int at, int parent, List<Edge> graph[], int[] ids, int lo[], boolean[] visited, List<Integer> bridges){
         visited[at] = true;
         id++;
         ids[at] = id;
         lo[at] = id;
         for(Edge e : graph[at]){
+            // If it is parent we simply disregard as we want a temporary directed path
+            // in the graph
             if(e.to == parent) continue;
             if(visited[e.to]) lo[at] = Math.min(ids[e.to],lo[at]);
             else{
