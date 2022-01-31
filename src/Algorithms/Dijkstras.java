@@ -15,6 +15,11 @@ public class Dijkstras {
             this.cost = cost;
         }
     }
+    /*
+    Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a directed edge weighted graph,
+    which may represent, for example, road networks
+    Time complexity - O((V + E)log V)
+     */
 
     public static class Node {
         int id;
@@ -26,7 +31,9 @@ public class Dijkstras {
         }
     }
     public double[] dijkstra(int start, List<Edge> graph[]){
+        // Here the dist stores the dist from stating node to that node
         double dist[] = new double[graph.length];
+        // Helps in coping with overflow
         Arrays.fill(dist,Double.POSITIVE_INFINITY);
         dist[start] = 0;
         boolean visited[] = new boolean[graph.length];
