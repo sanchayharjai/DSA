@@ -1,7 +1,7 @@
 package Algorithms;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class TopologicalSort {
     /*
@@ -45,6 +45,23 @@ public class TopologicalSort {
             for(Edge e : graph[i]) dist[e.to] = Math.min(dist[e.to],dist[i] + e.weight);
         }
         return dist;
+    }
+    public int[] kahns(List<Edge> graph[]){
+        int inDegree[] = new int[graph.length];
+        for( List<Edge> edges : graph){
+            for(Edge e : edges) inDegree[e.to]++;
+        }
+        Deque<Integer> q = new ArrayDeque<>();
+        for(int i = 0; i < inDegree.length; i++) if(inDegree[i] == 0) q.addLast(i);
+        int index = 0;
+        int[] ordering = new int[graph.length];
+        while(!q.isEmpty()){
+            int cur = q.pollFirst();
+            ordering[index++] = cur;
+            for(Edge e : graph[cur]) if(--inDegree[e.to] == 0) q.addLast(e.to);
+        }
+        if(index != graph.length) throw new IllegalArgumentException("Not a DAG, No topological ordering possible");
+        return ordering;
     }
 
 }
